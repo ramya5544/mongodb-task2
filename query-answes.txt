@@ -1,0 +1,117 @@
+Find all the topics and tasks which are thought in the month of October
+	
+Query =>>>>	db.topics.aggregate([
+  			{$lookup:{
+				 from: "tasks",
+ 				 localField:"topic_id",
+  				 foreignField: "topic_id",
+  				 as: "task"		
+				}
+			},
+			{$match:{
+				$and:[
+   				 	{start_date:{$gte:ISODate('2023-10-01'),$lte:ISODate('2023-10-31')}},
+    					{"task.deadline_date":{$gte:ISODate('2023-10-01'),$lte:ISODate('2023-10-31')}}
+ 				     ]
+				}
+			},
+			{$project:{
+				task_id:0
+				}
+			},
+			{$project:{
+				"task":{"topic_id":0}
+				}
+			}
+			]);
+
+
+
+
+
+Find all the company drives which appeared between 15 oct-2023 and 31-oct-2023
+
+Query=>>>>
+
+	db.companydrives.aggregate([{$match:
+					    {drive_date:{$gte:ISODate('2023-10-15'),$lte:ISODate('2023-10-31')}}
+				     }]);
+
+
+Find all the company drives and students who are appeared for the placement.
+
+Query=>>>>	db.companydrives.aggregate([
+  				{$lookup:{
+  					from: "users",
+ 						localField:"userid",
+  					foreignField: "userid",
+  					as: "student"
+					}
+				},{$project:{
+					userid:0
+					}
+				},{$project:{
+  					student:{_id:0}
+					}
+				}
+				]);
+
+Find the number of problems solved by the user in codekata
+		
+Query=>>>>	db.users.aggregate([
+  				{$lookup:{
+  					from: "codekata",
+  					localField: "userid",
+  					foreignField: "user_id",
+  					as: "codekata"
+					}
+				},{$project:{
+ 						"codekata":{_id:0,user_id:0}
+					    }
+				}
+				]);
+
+
+Find all the mentors with who has the mentee's count more than 15
+
+Query>>>>	db.mentors.aggregate([
+  				{$match:{
+ 					mentees:{$gt:15}
+				}},{$project:{
+					_id:0
+				}}
+				]);
+
+
+
+Find the number of users who are absent and task is not submitted  between 15 oct-2023 and 31-oct-2023
+
+Query=>>>	db.users.aggregate([
+ 			 {
+			   $lookup:{
+  				  from: "attendance",
+ 				  localField: "userid",
+  				  foreignField: "userid",
+				  as: "attendance",
+				}
+				},{
+				$lookup:{
+ 					 from: "task_completion",
+  					 localField: "userid",
+  					 foreignField: "userid",
+ 					 as: "task-comp",
+					}
+				},{
+				$match:{
+  					$and: [
+   						 {
+   						   "attendance.attendance": false,"attendance.Class_date":{$gte:ISODate('2023-10-15'),$lte:ISODate('2023-10-31')}
+    						},
+   						 {
+    						  "task-comp.task_completion": false,
+    						},
+ 					       ],
+					}
+				}
+			]);
+

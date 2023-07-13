@@ -1,0 +1,16 @@
+-------------------------------mentors---------------------------------
+
+	db.createCollection("mentors");
+
+db.mentors.insertMany([
+  { mentor_id: 1, mentor_name: 'ram', mentees: 30 },
+  { mentor_id: 2, mentor_name: 'ramya', mentees: 13 },
+  { mentor_id: 3, mentor_name: 'arun', mentees: 50 },
+  { mentor_id: 4, mentor_name: 'vishvhin', mentees: 70 },
+  { mentor_id: 5, mentor_name: 'angel', mentees: 16 },
+  { mentor_id: 6, mentor_name: 'ragu', mentees: 10 },
+  { mentor_id: 7, mentor_name: 'Gurupreeth', mentees: 13 },
+  { mentor_id: 8, mentor_name: 'prasanth', mentees: 32 },
+  { mentor_id: 9, mentor_name: 'raju', mentees: 14 },
+  { mentor_id: 10, mentor_name: 'Vijayantony', mentees: 35 }
+]);

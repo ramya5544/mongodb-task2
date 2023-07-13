@@ -1,0 +1,31 @@
+-------------------------task_completion-----------------------------------------
+
+	db.createCollection("task_completion");
+
+db.task_completion.insertMany([
+  {
+    "userid":1,
+    "task_completion":true,
+    "pending_tasks_id":[]
+  },
+  {
+    "userid":2,
+    "task_completion":true,
+    "pending_tasks_id":[]
+  },
+  {
+    "userid":3,
+    "task_completion":false,
+    "pending_task_id":[1,2]
+  },
+  {
+    "userid":4,
+    "task_completion":true,
+    "pending_tasks_id":[]
+  },
+  {
+    "userid":5,
+    "task_completion":false,
+    "pending_tasks_id":[2]
+  }
+]);
